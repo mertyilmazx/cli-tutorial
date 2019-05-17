@@ -1,23 +1,68 @@
-'use strict'
+#!/usr/bin/env node
 
-const { join, resolve } = require('path')
-const camelCase = require('camelcase')
-const requireDir = require('require-dir')
-const colors = require('chalk')
-const shell = require('shelljs')
+const inquirer = require("inquirer");
+const chalk = require("chalk");
+const figlet = require("figlet");
+const shell = require("shelljs");
 
-// External dependencies to pass to the commands
-let dep = { join, resolve, console, colors, shell, process }
+const init = () => {
+    console.log(
+        chalk.green(
+            figlet.textSync("DEXMO", {
+                font: "doh",
+                horizontalLayout: "default",
+                verticalLayout: "default"
+            })
+        )
+    );
+}
+const askQuestions = () => {
+    const questions = [
+        {
+            name: "FILENAME",
+            type: "input",
+            message: "What is the name of the file without extension?"
+        },
+        {
+            type: "list",
+            name: "EXTENSION",
+            message: "What is the file extension?",
+            choices: [".rb", ".js", ".php", ".css"],
+            filter: function (val) {
+                return val.split(".")[1];
+            }
+        }
+    ];
+    return inquirer.prompt(questions);
+};
+const createFile = (filename, extension) => {
+    const filePath = `${process.cwd()}/${filename}.${extension}`
+    shell.touch(filePath);
+    return filePath;
+};
 
-// Internal dependencies
-const inDepFns = requireDir(join(__dirname, 'lib', 'modules'))
-Object.keys(inDepFns).forEach(name => {
-  dep[camelCase(name)] = inDepFns[name](dep)
-})
+const success = (filepath) => {
+    console.log(
+        chalk.white.bgGreen.bold(`Done! File created at ${filepath}`)
+    );
+};
 
-// Load commands from folder and pass dependencies
-const commandsFn = requireDir(join(__dirname, 'lib', 'commands'))
-const commands = Object.keys(commandsFn).map((i) => commandsFn[i](dep))
+const run = async () => {
+    // show script introduction
+    init();
+    console.log(process.argv.slice(2))
 
-// Export commands and modules separatelly
-module.exports = { commands, modules: dep }
+    // // ask questions
+    // const answers = await askQuestions();
+    // const { FILENAME, EXTENSION } = answers;
+
+    // // create the file
+    // const filePath = createFile(FILENAME, EXTENSION);
+
+    // // show success message
+    // success(filePath);
+
+};
+
+
+run();

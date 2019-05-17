@@ -1,31 +1,29 @@
 {
-  "name": "my-cli-app",
-  "version": "1.0.0",
-  "description": "A fancy CLI app",
-  "homepage": "http://eridem.net",
+  "name": "cli-tutorial",
+  "version": "1.0.3",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "standard": "standard",
-    "pretest": "standard --fix",
-    "test": "nyc --cache mocha --timeout=8000 --check-leaks test/**/*.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "dexmo-web-cli": "./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eridem/cli-tutorial.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bin": {
-    "mycli": "bin/cmd.js"
+  "bugs": {
+    "url": "https://github.com/eridem/cli-tutorial/issues"
   },
+  "homepage": "https://github.com/eridem/cli-tutorial#readme",
   "dependencies": {
-    "camelcase": "^4.0.0",
-    "chalk": "^1.1.3",
-    "require-dir": "^0.3.1",
-    "shelljs": "^0.7.6",
-    "yargs": "^6.6.0"
-  },
-  "devDependencies": {
-    "chai": "^3.5.0",
-    "mocha": "^3.2.0",
-    "nyc": "^10.0.0",
-    "standard": "^8.6.0"
+    "chalk": "^2.4.2",
+    "figlet": "^1.2.1",
+    "inquirer": "^6.3.1",
+    "shelljs": "^0.8.3"
   }
 }
